@@ -1,0 +1,85 @@
+\section{\probidx. \probname}
+
+\begin{document}
+	
+	\section{\probidx. \probname}
+	
+	\begin{frame} % No title at first slide
+		\sectiontitle{\probidx}{\probname}
+		\sectionmeta{
+			\texttt{dijkstra, dynamic programming, bitmasking}\\
+			출제진 의도 -- \textbf{\color{acplatinum} Hard}
+		}
+		\begin{itemize}
+			\item 제출 18번, 정답 5명 (정답률 27.778\%)
+			\item 처음 푼 사람: \textbf{tlwpdus}, 174분
+			\item 출제자: \texttt{sivcde0405}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{\textbf{\probidx}. \probname}
+		\begin{itemize}
+			\item 한별이가 카드를 모두 수집하려면 정점 $k_i (0 \leq i \leq N)$를 모두 방문해야 합니다.
+			\begin{itemize}
+				\item 단, 입력에서 주어지지 않은 $k_0$은 1로 정의합니다.
+			\end{itemize}
+			\item 이는 한별이가 $1$번 정점으로 돌아올 필요가 없다는 것과 한별이가 가진 카드의 개수에 따라 각 정점간의 최단경로가 달라진다는 것을 제외하면 외판원 순회 문제와 유사합니다.
+			\item 따라서 최단거리 알고리즘으로 미리 전처리를 해주면 DP를 이용해 $N^22^N$회의 연산으로 문제를 해결할 수 있습니다.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{\textbf{\probidx}. \probname}
+		\begin{itemize}
+			\item $0 \leq L \leq N-1, 1\leq i,j \leq V$을 만족하는 모든 $L, i, j$에 대하여 한별이가 $L$개의 카드를 가지고 있을 때 정점 $k_i$에서 정점 $k_j$로 이동하는 최단거리 $dist$[$L$][$i$][$j$]를 모두 구합니다.
+			\item 최단거리를 구하는 방법은 뒤에 서술했습니다.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{\textbf{\probidx}. \probname}
+		\begin{itemize}
+			\item 정수형 2차원 배열의 원소 $A$[$bit$][$n$]를 다음과 같이 정의합니다. $(0 \leq bit \leq 2^N-1, 0 \leq n \leq N)$
+			\begin{itemize}
+				\item $A$[$bit$][$n$]의 초기값은 최단거리를 탐색할 때 설정한 거리의 최댓값인 $INF$입니다.
+				\item 단, $A$[$0$][$0$]은 $0$으로 설정합니다.
+				\item 현재 정점 $k_n$에 위치하고, $bit$에 비트마스킹된 정점들을 방문했을 때 최단경로의 길이
+				\item $bit$를 이진수로 나타낼 때, $\alpha-1$번째 자리가 $1$이면 정점 $k_\alpha$를 방문함,
+				\item $bit$를 이진수로 나타낼 때, $\alpha-1$번째 자리가 $0$이면 정점 $k_\alpha$를 방문하지 않음 $(1 \leq \alpha \leq N)$
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{\textbf{\probidx}. \probname}
+		\begin{itemize}
+			\item $A$[$i+2^{j-1}$][$j$]를 $\min_{1\leq k\leq N, k\neq j} A$[$i$][$k$]$+dist$[$cnt$][$k$][$j$]와 원래의 $A$[$i$][$j$] 중 더 작은 값으로 갱신합니다.
+			\begin{itemize}
+				\item $i$를 이진수로 나타낼 때 $j-1$번째 자리가 $1$이라면 $j$번 정점을 이미 방문했으므로 갱신하지 않습니다.
+				\item $cnt$는 $i$를 이진수로 표현했을 때 등장하는 1의 개수로, 한별이의 현재 레벨 $L$과 같습니다.
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{\textbf{\probidx}. \probname}
+		\begin{itemize}
+			\item $A$를 DP를 이용하여 계산한 후 $ans$를 $A$[$2^n-1$][$1,\cdots ,n$]중의 최솟값으로 정의합니다. 처음 최단거리를 탐색할 때 설정한 거리의 최댓값을 $INF$라 할 때 다음의 두 가지 경우가 존재합니다.
+			\begin{itemize}
+				\item $ans<INF$일 때는 이동이 가능하므로 답이 $ans$입니다.
+				\item $ans>=INF$일 때는 이동이 불가능하므로 답이 $-1$입니다.
+			\end{itemize}
+			\item 구현 방식에 따라 \complexity{N^2E \log E+N^22^N}, \complexity{N^2V^2+N^22^N}, \complexity{N^2VE+N^22^N} 등의 시간복잡도로 문제를 해결할 수 있습니다.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{\textbf{\probidx}. \probname}
+		\begin{itemize}
+			\item 최단거리를 구하는 알고리즘 중 일부의 연산 횟수는 다음과 같습니다.
+			\begin{itemize}
+				\item 힙을 사용한 다익스트라 알고리즘: $N^2E\log E$회
+				\item \complexity{V^2} 다익스트라 알고리즘: $N^2V^2$회
+				\item SPFA 알고리즘: $N^2VE$회
+				\item 벨만-포드 알고리즘: $N^2VE$회
+				\item 플로이드-워셜 알고리즘: $NV^3$회
+			\end{itemize}
+			\item $N, V, E$를 고려했을 때 벨만-포드 알고리즘, 플로이드-워셜 알고리즘 등은 시간 초과를 받을 수 있으므로 사용할 수 없습니다.
+			\item Python 3, Kotlin 등의 언어로 문제를 해결하는 경우에는 시간 초과를 방지하기 위해 힙을 사용한 다익스트라 알고리즘의 사용을 권장합니다.
+		\end{itemize}
+	\end{frame}

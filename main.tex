@@ -1,4 +1,3 @@
-%!TEX program = xelatex
 \documentclass[11pt, aspectratio=169]{beamer}
 \input{header}
 \usetikzlibrary{arrows.meta,matrix,decorations.pathreplacing}
@@ -6,17 +5,18 @@
 \usepackage{ifthen}
 \usepackage{verbatim}
 
-\title{(대충 제목)}
-\subtitle{(대충 무언가)}
-\author{(대충 이름)}
-\date{2023년 2월 20일}
+\title{대충제목}
+\subtitle{대충부제목}
+\author{대충검열 믕}
+\date{2023년 5월 15일}
 
 \pgfplotsset{compat=1.16}
+\renewcommand{\figurename}{Fig.}
 
 \begin{document}
-    \setcounter{framenumber}{-1}
-    \frame{\titlepage}
-    \importsolution{1}{카드캡터 한별}{first-slide}
-    
-    %\importsolution{sunseo}{subtitle}{.tex name}
+\setcounter{framenumber}{-1}
+\frame{\titlepage}
+\importsolution{1}{Example}{00_backup}
+
+%\importsolution{sunseo}{subtitle}{.tex name}
 \end{document}
